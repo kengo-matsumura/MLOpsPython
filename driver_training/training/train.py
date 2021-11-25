@@ -18,13 +18,13 @@ def split_data(data_df):
 
     features = data_df.drop(["target", "id"], axis=1)
     labels = np.array(data_df["target"])
-    features_train, features_valid, labels_train, labels_valid = train_test_split(
+    feat_train, feat_valid, labels_train, labels_valid = train_test_split(
         features, labels, test_size=0.2, random_state=0
     )
 
-    train_data = lightgbm.Dataset(features_train, label=labels_train)
+    train_data = lightgbm.Dataset(feat_train, label=labels_train)
     valid_data = lightgbm.Dataset(
-        features_valid, label=labels_valid, free_raw_data=False
+        feat_valid, label=labels_valid, free_raw_data=False
     )
 
     return (train_data, valid_data)
@@ -76,8 +76,9 @@ def main():
         "verbose": 2,
     }
 
-    # Call the functions defined in this file and assign them to variables to ensure the outputs of
-    # one function can be fed as inputs into the next function.
+    # Call the functions defined in this file and assign them to variables
+    # to ensure the outputs of one function can be fed
+    # as inputs into the next function.
     data = split_data(data_df)
     model = train_model(data, parameters)
     model_metrics = get_model_metrics(model, data)
