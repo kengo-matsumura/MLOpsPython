@@ -30,7 +30,7 @@ def main():
         "--model_name",
         type=str,
         help="Name of the Model",
-        default="porto_seguro_model.pkl",
+        default="driver_training_model.pkl",
     )
 
     parser.add_argument(
