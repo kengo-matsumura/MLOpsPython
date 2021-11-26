@@ -1,12 +1,9 @@
-import numpy
+# import numpy
 import joblib
 import json
 import os
 from azureml.core.model import Model
-from inference_schema.schema_decorators \
-    import input_schema, output_schema
-from inference_schema.parameter_types.numpy_parameter_type \
-    import NumpyParameterType
+# from inference_schema.schema_decorators import input_schema, output_schema
 
 
 def init():
@@ -18,7 +15,8 @@ def init():
     # It is the path to the model folder
     # (./azureml-models/$MODEL_NAME/$VERSION)
     model_path = Model.get_model_path(
-        os.getenv("AZUREML_MODEL_DIR").split('/')[-2])
+        os.getenv("AZUREML_MODEL_DIR").split("/")[-2]
+    )
 
     model = joblib.load(model_path)
 
@@ -46,20 +44,20 @@ def run(data, request_headers):
     # The HTTP 'traceparent' header may be set by the caller to implement
     # distributed tracing (per the W3C Trace Context proposed specification)
     # and can be used to correlate the request to external systems.
-    print(('{{"RequestId":"{0}", '
-           '"TraceParent":"{1}", '
-           '"NumberOfPredictions":{2}}}'
-           ).format(
-               request_headers.get("X-Ms-Request-Id", ""),
-               request_headers.get("Traceparent", ""),
-               len(result)
-    ))
-
-    # classnames = ['no claim', 'claim']
-    # probabilities = [prediction for prediction in result]
-    # predicted_classes = [classnames[0] if p < 0.5 else classnames[1] for p in probabilities]
+    print(
+        (
+            '{{"RequestId":"{0}", '
+            '"TraceParent":"{1}", '
+            '"NumberOfPredictions":{2}}}'
+        ).format(
+            request_headers.get("X-Ms-Request-Id", ""),
+            request_headers.get("Traceparent", ""),
+            len(result),
+        )
+    )
 
     return {"result": result.tolist()}
+
 
 if __name__ == "__main__":
     # Test scoring
