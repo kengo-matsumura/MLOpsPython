@@ -33,6 +33,7 @@ dependencies:
       - scikit-learn
       - lightgbm
       - pandas
+      - cryptography==3.3.1
 
       # Scoring deps
       - inference-schema[numpy-support]
