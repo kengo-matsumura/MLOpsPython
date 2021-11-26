@@ -32,7 +32,7 @@ def init():
 # at http://<scoring_base_url>/swagger.json
 # @input_schema('data', NumpyParameterType(input_sample))
 # @output_schema(NumpyParameterType(output_sample))
-def run(data, request_headers):
+def run(raw_data, request_headers):
 
     
     data = json.loads(raw_data)["data"]
