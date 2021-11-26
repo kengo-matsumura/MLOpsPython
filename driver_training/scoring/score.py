@@ -55,8 +55,11 @@ def run(data, request_headers):
                len(result)
     ))
 
-    return {"result": result.tolist()}
+    # classnames = ['no claim', 'claim']
+    # probabilities = [prediction for prediction in result]
+    # predicted_classes = [classnames[0] if p < 0.5 else classnames[1] for p in probabilities]
 
+    return {"result": result.tolist()}
 
 if __name__ == "__main__":
     # Test scoring
