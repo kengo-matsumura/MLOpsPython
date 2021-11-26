@@ -1,7 +1,6 @@
-# import numpy
+import numpy
 import joblib
 import json
-import os
 from azureml.core.model import Model
 
 # from inference_schema.schema_decorators import input_schema, output_schema
@@ -15,8 +14,8 @@ def init():
     # AZUREML_MODEL_DIR is an environment variable created during deployment.
     # It is the path to the model folder
     # (./azureml-models/$MODEL_NAME/$VERSION)
-    model_path = Model.get_model_path(os.getenv("AZUREML_MODEL_DIR").split("/")[-2])
-
+    model_path = Model.get_model_path(
+        model_name="driver_training_model.pkl")
     model = joblib.load(model_path)
 
 
@@ -33,7 +32,11 @@ def init():
 # at http://<scoring_base_url>/swagger.json
 # @input_schema('data', NumpyParameterType(input_sample))
 # @output_schema(NumpyParameterType(output_sample))
-def run(data, request_headers):
+def run(raw_data, request_headers):
+
+    
+    data = json.loads(raw_data)["data"]
+    data = numpy.array(data) #Ensuring that we're deserialising the data in str format
     result = model.predict(data)
 
     # Demonstrate how we can log custom data into the Application Insights
