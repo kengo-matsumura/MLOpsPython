@@ -17,7 +17,7 @@ resources:
     image: mcr.microsoft.com/mlops/python:latest
   pipelines:
   - pipeline: model-train-ci
-    source: Model-Train-Register-CI # Name of the triggering pipeline
+    source: Kengo CI # Name of the triggering pipeline
     trigger:
       branches:
         include:
